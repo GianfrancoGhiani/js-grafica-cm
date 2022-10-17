@@ -31,6 +31,7 @@ function play(){
     playingField.appendChild(playingSquare);
     playingSquare.innerHTML = '';
     let numCells;
+
     if (difficulty.value == '3'){
         numCells = 49;
     } else if (difficulty.value == '2'){
@@ -38,22 +39,57 @@ function play(){
     } else {
         numCells = 100;
     }
+    const bombsPos = [];
+    while (bombsPos.length<=16){
+        let pos = randomNumber(1,numCells);
+        if (!bombsPos.includes(pos)){
+            bombsPos.push(pos);
+        }
+    }
+    //console.log(bombsPos);
+    const clicks = [];
     for (let i = 0; i<numCells; i++){
+        // creation of cells with class="cell-number" to identify them
         const cell = document.createElement('div')
         cell.className = `cell-${i + 1} w-${Math.sqrt(numCells)} d-flex fw-bold justify-content-center align-items-center`;
         const subCell = document.createElement('span');
         subCell.innerText = `${i + 1}`;
         cell.append(subCell);
         playingSquare.appendChild(cell);
+         
         cell.addEventListener('click', function(){
-            cell.classList.toggle('green');
+            clicks.push('1');
+            // if the array of random position of bombs includes the number inside the clicked cell
+            if (bombsPos.includes(parseInt(cell.innerText))){
+                const bombsArray = [];
+                // for every cell which has the class number in the array of positions of bombs add the class 'green'
+                for (let i = 0; i < bombsPos.length; i++){
+                    bombsArray.push(`cell-${bombsPos[i]}`)
+                    let bomb = document.getElementsByClassName(`${bombsArray[i]}`);
+                    bomb[0].classList.add('green');
+                    //console.log(bomb[0].className);
+                }
+            }
+            console.log(clicks.length) //number of clicks
         })
+        
     }
+
+
+
+
     
 }
 
 
+/*
+bombs array unisce la stringa 'cell-' con ila numero della bombPos
+per ogni elemento in bombPos 
+    bombarray += cell-{bombPOs[i]}
 
+
+
+*/
 
 
 
