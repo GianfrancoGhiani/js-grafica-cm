@@ -69,6 +69,8 @@ function play(){
                     bomb[0].classList.add('green');
                     //console.log(bomb[0].className);
                 }
+            } else{
+                cell.className += ` blue`;
             }
             console.log(clicks.length) //number of clicks
         })
